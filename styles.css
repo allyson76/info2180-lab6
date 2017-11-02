@@ -1,0 +1,33 @@
+h1{
+    font-family: verdana;
+	color:White;
+	background-color:fuchsia;
+	height:85px;
+	width:700px;
+	border:2px;
+	border-radius:10px;
+	text-align:center;
+	margin-left:200px;
+}
+#results{
+    background-color: Hotpink;
+    height: 600px;
+	width: 700px;
+	margin-left:200px;
+	font-size:15px;
+	font-family: Georgia;
+	text-align: center;
+	color: white;
+}
+
+
+#section2{
+    background-color: Hotpink;
+    height: 100px;
+	width: 700px;
+	margin-left:200px;
+	font-family: Georgia;
+	text-align: center;
+	color:white;
+}
+

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title> Web Dictionary </title>
+   <h1> WEB DICTIONARY </h1>
+   <meta charset="utf-8" />
+   <script type="text/javascript" src="jquery-3.1.1.min.js"></script>
+   <link href="styles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div id="section2">
+    	<p> Look up the definiton of a word (eg. bar, ajax, html, css, javascript or php) </p>
+    	<input id="q" type="text" name="q" placeholder="Search for Definition.."/>
+    	<input id="searchButton" type="button" value="Search" />
+    	<input id="searchButtonAll" type="button" value="Get All Definations" />
+	</div>
+	<div id="results"></div>
+	<script type="text/javascript">
+
+		function getDefinition(data, dataType){
+
+			// jquery $.get send a GET ajax request
+			$.get('request.php', data, function(result){
+				if(dataType === 'html'){
+					document.getElementById('results').innerHTML ='<h3>Results</h3>' + result;
+				}
+				else if(dataType === 'xml'){
+					var ab = document.createElement('ab');
+
+					// jquery dom traverse
+					$(result).find('definition').each(function(i,df){
+						var li = document.createElement('ab');
+
+						li.innerHTML ='<h3>'+df.getAttribute('name')+'</h3><p>'+df.textContent+'</p>';
+
+						ab.append(li);
+					});
+
+					document.getElementById('results').innerHTML = ab.innerHTML;
+				}
+			}, dataType);
+		}
+
+		function cDefinition(definition){
+			// force to lowercase
+			var cDefinition = definition.toLowerCase();
+
+			// remove whitespace if the trim function exists
+			if(definition.trim){
+				cDefinition.trim();
+			}
+
+			return cDefinition;
+		}
+
+		document.addEventListener('DOMContentLoaded', function() {
+			
+			// add click event
+			$('#searchButton').on('click', function(){
+
+				// input value
+				var q = document.getElementById('q').value;
+				var definition = cDefinition(q);
+
+				getDefinition({q: definition}, 'html');
+			});
+
+			// add click event for all definition
+			$('#searchButtonAll').on('click', function(){
+
+				// since we are getting all, no use for q
+
+				getDefinition({all: true}, 'xml');
+			});
+		});
+	</script>
+</body>
+</html>
